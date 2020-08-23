@@ -1,0 +1,5 @@
+.vscode
+go.sum
+/_examples/test-*
+/_examples/issue-*
+/_examples/feature-*
