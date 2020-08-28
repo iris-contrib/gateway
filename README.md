@@ -12,6 +12,7 @@ The only requirement is the [Go Programming Language](https://golang.org/dl).
 $ go get github.com/iris-contrib/gateway
 ```
 
+<!-- 
 **Until this [PR](https://github.com/apex/gateway/pull/33) is merged, you have to use a `replace statement` inside your go.mod file**:
 
 ```text
@@ -26,6 +27,9 @@ require (
 
 replace github.com/apex/gateway/v2 v2.0.0-20200703123654-59bba3473042 => github.com/kataras/gateway/v2 v2.0.0-20200823133619-5f644b75fcd5
 ```
+
+After 8501 minutes.... they are not quite responsible or fast enough about their open-source repos, I had to manually fork the repository and customize the code... as they don't even reply to their PRs, not just mines.
+-->
 
 ## Getting Started
 

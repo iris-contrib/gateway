@@ -3,11 +3,11 @@ package gateway
 import (
 	"net/http"
 
+	"github.com/iris-contrib/gateway/gateway"
+
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/kataras/iris/v12"
 	"github.com/kataras/iris/v12/core/router"
-
-	"github.com/apex/gateway/v2"
-	"github.com/aws/aws-lambda-go/lambda"
 )
 
 // Options holds the Listen options. All fields are optional.
