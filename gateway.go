@@ -10,7 +10,7 @@ import (
 	"github.com/kataras/iris/v12/core/router"
 )
 
-// Options holds the Listen options. All fields are optional.
+// Options holds the gateway options. All fields are optional.
 type Options struct {
 	// When not empty then a URL parameter of that key will be used to route the requests,
 	// changes the default Iris Router behavior based on the Request's URI's Path, e.g. "path".
@@ -22,21 +22,34 @@ type Options struct {
 	URLPathParameter string
 }
 
-// Listen is given to iris.Application.Run to run the application
+// New returns a pair of iris Runner and Configurator
+// to convert the http application to a lambda function
 // using the Apex Gateway. That allows Iris-powered web application
 // to be deployed and ran on host services like Netlify and Amazon AWS.
-func Listen(opts Options) iris.Runner {
-	return func(app *iris.Application) error {
-		if opts.URLPathParameter != "" {
-			wrapper := urlToPath(opts.URLPathParameter)
-			app.WrapRouter(wrapper)
-			app.RefreshRouter()
-		}
-
+//
+// Usage:
+// app := iris.New()
+// [...routes]
+// runner, configurator := gateway.New(gateway.Options{URLPathParameter: "path"})
+// app.Run(runner, configurator)
+//
+// Get the original API Gateway Request object through:
+// req, ok := gateway.GetRequest(ctx.Request().Context())
+func New(opts Options) (iris.Runner, iris.Configurator) {
+	runner := func(app *iris.Application) error {
 		g := gateway.NewGateway(app)
 		lambda.StartHandler(g)
 		return nil
 	}
+
+	configurator := func(app *iris.Application) {
+		if opts.URLPathParameter != "" {
+			wrapper := urlToPath(opts.URLPathParameter)
+			app.WrapRouter(wrapper)
+		}
+	}
+
+	return runner, configurator
 }
 
 func urlToPath(key string) router.WrapperFunc {

@@ -39,8 +39,8 @@ Simply as:
 app := iris.New()
 // [...]
 
-runner := gateway.Listen(gateway.Options{})
-app.Run(runner)
+runner, configurator := gateway.New(gateway.Options{})
+app.Run(runner, configurator)
 ```
 
 ### Netlify
@@ -63,9 +63,10 @@ func main() {
     app.Get("/ping", status)
 
     // IMPORTANT:
-    app.Run(gateway.Listen(gateway.Options{
+    runner, configurator := gateway.New(gateway.Options{
         URLPathParameter: "path",
-    }))
+    })
+    app.Run(runner, configurator)
 }
 
 func notFound(ctx iris.Context){
