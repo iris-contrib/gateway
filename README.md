@@ -22,7 +22,7 @@ go 1.15
 
 require (
 	github.com/iris-contrib/gateway v0.0.0-20200823143335-771cd2392f72
-	github.com/kataras/iris/v12 v12.1.9-0.20200823145529-ef5685bf7eeb
+	github.com/kataras/iris/v12 v12.2.0-alpha
 )
 
 replace github.com/apex/gateway/v2 v2.0.0-20200703123654-59bba3473042 => github.com/kataras/gateway/v2 v2.0.0-20200823133619-5f644b75fcd5
