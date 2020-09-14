@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/iris-contrib/gateway/gateway"
 
@@ -20,6 +21,11 @@ type Options struct {
 	//
 	// Defaults to empty.
 	URLPathParameter string
+	// When not empty then a URL parameter of that key will be used
+	// to route the requests based on the given method.
+	//
+	// Defaults to empty.
+	URLMethodParameter string
 }
 
 // New returns a pair of iris Runner and Configurator
@@ -43,8 +49,8 @@ func New(opts Options) (iris.Runner, iris.Configurator) {
 	}
 
 	configurator := func(app *iris.Application) {
-		if opts.URLPathParameter != "" {
-			wrapper := urlToPath(opts.URLPathParameter)
+		if opts.URLPathParameter != "" || opts.URLMethodParameter != "" {
+			wrapper := makeWrapper(opts.URLPathParameter, opts.URLMethodParameter)
 			app.WrapRouter(wrapper)
 		}
 	}
@@ -52,17 +58,28 @@ func New(opts Options) (iris.Runner, iris.Configurator) {
 	return runner, configurator
 }
 
-func urlToPath(key string) router.WrapperFunc {
+func makeWrapper(pathKey, methodKey string) router.WrapperFunc {
 	return func(w http.ResponseWriter, r *http.Request, router http.HandlerFunc) {
 		req, _ := gateway.GetRequest(r.Context())
-		path := req.QueryStringParameters["path"]
-		if len(path) > 0 {
-			if path[0] != '/' {
-				path = "/" + path
+
+		if pathKey != "" {
+			path := req.QueryStringParameters["path"]
+			if len(path) > 0 {
+				if path[0] != '/' {
+					path = "/" + path
+				}
+				r.URL.Path = path
+				r.URL.RawPath = path
+				r.RequestURI = path
 			}
-			r.URL.Path = path
-			r.URL.RawPath = path
-			r.RequestURI = path
+		}
+
+		if methodKey != "" {
+			method := req.QueryStringParameters["method"]
+			if len(method) > 0 {
+				method = strings.ToUpper(method)
+				r.Method = method
+			}
 		}
 
 		router(w, r)
