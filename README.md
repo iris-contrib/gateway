@@ -1,8 +1,8 @@
 # Gateway
 
-[![build status](https://img.shields.io/travis/com/iris-contrib/gateway/master.svg?style=for-the-badge&logo=travis)](https://travis-ci.com/github/iris-contrib/gateway) [![report card](https://img.shields.io/badge/report%20card-a%2B-ff3333.svg?style=for-the-badge)](https://goreportcard.com/report/github.com/iris-contrib/gateway) [![godocs](https://img.shields.io/badge/go-%20docs-488AC7.svg?style=for-the-badge)](https://pkg.go.dev/github.com/iris-contrib/gateway)
+[![build status](https://img.shields.io/github/workflow/status/iris-contrib/gateway/CI/master?style=for-the-badge)](https://github.com/iris-contrib/gateway/actions) [![report card](https://img.shields.io/badge/report%20card-a%2B-ff3333.svg?style=for-the-badge)](https://goreportcard.com/report/github.com/iris-contrib/gateway) [![godocs](https://img.shields.io/badge/go-%20docs-488AC7.svg?style=for-the-badge)](https://pkg.go.dev/github.com/iris-contrib/gateway)
 
-Gateway is a simple [iris.Runner](https://github.com/kataras/iris/blob/8e049d77c92fb4550c836e8c64c3052c3d05af15/iris.go#L634). It runs Iris Web Applications through AWS Lambda & API Gateway aka **Serverless**. This includes the [Netlify functions (free and paid)](https://docs.netlify.com/functions/overview/) too. Thanks to [apex/gateway](https://github.com/apex/gateway).
+Gateway is a simple [iris.Runner](https://github.com/kataras/iris/blob/master/iris.go#L662). It runs Iris Web Applications through AWS Lambda & API Gateway aka **Serverless**. This includes the [Netlify functions (free and paid)](https://docs.netlify.com/functions/overview/) too. Thanks to [apex/gateway](https://github.com/apex/gateway).
 
 ## Installation
 
@@ -103,8 +103,8 @@ func status(ctx iris.Context) {
   
 
 [build.environment]
-  GO_VERSION = "1.14.7"
-  GIMME_GO_VERSION = "1.14.7"
+  GO_VERSION = "1.17.2"
+  GIMME_GO_VERSION = "1.17.2"
   GO_IMPORT_PATH = "github.com/your_username/your_repo"
 
 [[redirects]]
